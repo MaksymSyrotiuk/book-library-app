@@ -1,19 +1,30 @@
 import { useState } from "react";
 import "./BookForm.css";
+import { useDispatch } from "react-redux";
+import { addBook } from "../../redux/books/actionCreators";
 
 const BookForm = () => {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
+	const dispatch = useDispatch();
 
 	const handleSumbit = (e) => {
 		e.preventDefault();
 		if (title && author) {
+			const book = {
+				title,
+				author,
+			};
+
+			dispatch(addBook(book));
+			setTitle("");
+			setAuthor("");
 		}
 	};
 	return (
 		<div className="app-block book-form">
 			<h2>Add a new Book</h2>
-			<form action={handleSumbit}>
+			<form onSubmit={handleSumbit}>
 				<div>
 					<label htmlFor="title">Title</label>
 					<input
