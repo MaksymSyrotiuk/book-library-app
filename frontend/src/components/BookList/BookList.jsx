@@ -1,15 +1,36 @@
 import { useSelector, useDispatch } from "react-redux";
-import { BsBookmarkStarFill, BsBookmarkStar } from "react-icons/bs";
-import { deleteBook } from "../../redux/books/actionCreators";
+import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import {
+	selectTitleFilter,
+	selectAuthorFilter,
+} from "../../redux/slices/filterSlice";
 import "./BookList.css";
 
 const BookList = () => {
 	const books = useSelector((state) => state.books);
+	const titleFilter = useSelector(selectTitleFilter);
+	const authorFilter = useSelector(selectAuthorFilter);
 	const dispatch = useDispatch();
 
 	const handleDeleteBook = (id) => {
 		dispatch(deleteBook(id));
 	};
+
+	const handleToggleFavorite = (id) => {
+		dispatch(toggleFavorite(id));
+	};
+
+	const filteredBooks = books.filter((book) => {
+		const matchesTitle = book.title
+			.toLowerCase()
+			.includes(titleFilter.toLowerCase());
+		const matchesAuthor = book.author
+			.toLowerCase()
+			.includes(authorFilter.toLowerCase());
+		return matchesTitle && matchesAuthor;
+	});
+
 	return (
 		<div className="app-block book-list">
 			<h2>Book List</h2>
@@ -17,19 +38,25 @@ const BookList = () => {
 				<p>No books available</p>
 			) : (
 				<ul>
-					{books.map((book, i) => (
-						<li key={book.id}>
+					{filteredBooks.map((book, i) => (
+						<li key={i}>
 							<div className="book-info">
-								{" "}
-								{++i}. {book.title} by{" "}
+								{++i}.{book.title} by{" "}
 								<strong>{book.author}</strong>
 							</div>
 							<div className="book-actions">
-								{book.isFavorite ? (
-									<BsBookmarkStarFill className="star-icon" />
-								) : (
-									<BsBookmarkStar className="star-icon" />
-								)}
+								<span
+									onClick={() =>
+										handleToggleFavorite(book.id)
+									}
+								>
+									{book.isFavorite ? (
+										<BsBookmarkFill className="star-icon" />
+									) : (
+										<BsBookmark className="star-icon" />
+									)}
+								</span>
+
 								<button
 									onClick={() => handleDeleteBook(book.id)}
 								>
