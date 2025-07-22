@@ -18,7 +18,7 @@ app.get("/random-book", (req, res) => {
 app.get("/random-book-deleyed", (req, res) => {
   setTimeout(() => {
     res.json(getRandomBook());
-  }, 2000)
+  }, 1000)
 });
 
 const port = process.env.PORT || 4000;

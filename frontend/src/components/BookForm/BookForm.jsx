@@ -1,16 +1,20 @@
 import { useState } from "react";
 import "./BookForm.css";
-import {FaSpinner} from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 import createBookWithId from "../../utils/createBookWithId";
-import { useDispatch } from "react-redux";
-import { addBook, fetchBook } from "../../redux/slices/booksSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	addBook,
+	fetchBook,
+	selectIsLoadingViaAPI,
+} from "../../redux/slices/booksSlice";
 import booksData from "../../data/books.json";
-import {setError} from "../../redux/slices/errorSlice"
+import { setError } from "../../redux/slices/errorSlice";
 
 const BookForm = () => {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
+	const isLoadingViaApi = useSelector(selectIsLoadingViaAPI);
 	const dispatch = useDispatch();
 
 	const handleAddRandomBook = () => {
@@ -34,13 +38,8 @@ const BookForm = () => {
 		}
 	};
 
-	const handleAddRandomBookViaAPI = async () => {
-		try {
-			setIsLoading(true);
-			await dispatch(fetchBook("http://localhost:4000/random-book-deleyed"));
-		} finally {
-			setIsLoading(false);
-		}
+	const handleAddRandomBookViaAPI = () => {
+		dispatch(fetchBook("http://localhost:4000/random-book-deleyed"));
 	};
 
 	return (
@@ -69,14 +68,19 @@ const BookForm = () => {
 				<button type="button" onClick={handleAddRandomBook}>
 					Add Random
 				</button>
-				<button type="button" onClick={handleAddRandomBookViaAPI} disabled = {isLoading}>
-					{isLoading ? (
-							<>
-								<span>Loading book...</span>
-								<FaSpinner className="spinner" />
-							</>
-						) : "Add Random via API"
-					}
+				<button
+					type="button"
+					onClick={handleAddRandomBookViaAPI}
+					disabled={isLoadingViaApi}
+				>
+					{isLoadingViaApi ? (
+						<>
+							<span>Loading book...</span>
+							<FaSpinner className="spinner" />
+						</>
+					) : (
+						"Add Random via API"
+					)}
 				</button>
 			</form>
 		</div>
