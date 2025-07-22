@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./BookForm.css";
-import axios from "axios";
+import {FaSpinner} from "react-icons/fa";
 import createBookWithId from "../../utils/createBookWithId";
 import { useDispatch } from "react-redux";
 import { addBook, fetchBook } from "../../redux/slices/booksSlice";
@@ -10,6 +10,7 @@ import {setError} from "../../redux/slices/errorSlice"
 const BookForm = () => {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
 
 	const handleAddRandomBook = () => {
@@ -19,7 +20,7 @@ const BookForm = () => {
 		dispatch(addBook(createBookWithId(randomBook, "random")));
 	};
 
-	const handleSumbit = (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (title && author) {
 			const book = createBookWithId({ title, author }, "manual");
@@ -29,18 +30,23 @@ const BookForm = () => {
 			setTitle("");
 			setAuthor("");
 		} else {
-			dispatch(setError("You must fill title and author!"))
+			dispatch(setError("You must fill title and author!"));
 		}
 	};
 
-	const handleAddRandomBookViaAPI = () => {
-		dispatch(fetchBook());
+	const handleAddRandomBookViaAPI = async () => {
+		try {
+			setIsLoading(true);
+			await dispatch(fetchBook("http://localhost:4000/random-book-deleyed"));
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
 		<div className="app-block book-form">
 			<h2>Add a new Book</h2>
-			<form onSubmit={handleSumbit}>
+			<form onSubmit={handleSubmit}>
 				<div>
 					<label htmlFor="title">Title</label>
 					<input
@@ -60,11 +66,17 @@ const BookForm = () => {
 					/>
 				</div>
 				<button type="submit">Add Book</button>
-				<button type="submit" onClick={handleAddRandomBook}>
+				<button type="button" onClick={handleAddRandomBook}>
 					Add Random
 				</button>
-				<button type="submit" onClick={handleAddRandomBookViaAPI}>
-					Add Random via API
+				<button type="button" onClick={handleAddRandomBookViaAPI} disabled = {isLoading}>
+					{isLoading ? (
+							<>
+								<span>Loading book...</span>
+								<FaSpinner className="spinner" />
+							</>
+						) : "Add Random via API"
+					}
 				</button>
 			</form>
 		</div>
