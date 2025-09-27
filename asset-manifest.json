@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/MaksymSyrotiuk.github.io/book-library-app/static/css/main.8e01c80a.css",
-    "main.js": "/MaksymSyrotiuk.github.io/book-library-app/static/js/main.f747f216.js",
-    "index.html": "/MaksymSyrotiuk.github.io/book-library-app/index.html",
-    "main.8e01c80a.css.map": "/MaksymSyrotiuk.github.io/book-library-app/static/css/main.8e01c80a.css.map",
-    "main.f747f216.js.map": "/MaksymSyrotiuk.github.io/book-library-app/static/js/main.f747f216.js.map"
+    "main.css": "/%20/MaksymSyrotiuk.github.io/book-library-app/static/css/main.8e01c80a.css",
+    "main.js": "/%20/MaksymSyrotiuk.github.io/book-library-app/static/js/main.f747f216.js",
+    "index.html": "/%20/MaksymSyrotiuk.github.io/book-library-app/index.html",
+    "main.8e01c80a.css.map": "/%20/MaksymSyrotiuk.github.io/book-library-app/static/css/main.8e01c80a.css.map",
+    "main.f747f216.js.map": "/%20/MaksymSyrotiuk.github.io/book-library-app/static/js/main.f747f216.js.map"
   },
   "entrypoints": [
     "static/css/main.8e01c80a.css",
