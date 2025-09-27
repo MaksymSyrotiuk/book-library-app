@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https:/ /MaksymSyrotiuk.github.io/book-library-app/",
+  "homepage": "https:/ /MaksymSyrotiuk.github.io/book-library-app",
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
