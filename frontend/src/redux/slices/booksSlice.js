@@ -35,7 +35,7 @@ const booksSlice = createSlice({
 			};
 		},
 		toggleFavorite: (state, action) => {
-			return state.books.map((book) =>
+			state.books = state.books.map((book) =>
 				book.id === action.payload
 					? { ...book, isFavorite: !book.isFavorite }
 					: book,
