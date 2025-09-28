@@ -65,7 +65,7 @@ npm install
 cd api
 npm start
 ```
-Default API endpoint: [http://localhost:5000](http://localhost:5000)  
+Default API endpoint: [http://localhost:4000](http://localhost:4000)  
 
 
 🔹 Start the **Frontend**:  
